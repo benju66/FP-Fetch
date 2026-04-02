@@ -128,6 +128,63 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // 5. The Bridge: Send to Background Service Worker
+    saveBtn.addEventListener('click', () => {
+        if (!currentFile || !companyInput.value || !selectedSowCode.value) return;
+
+        // Lock UI while processing
+        saveBtn.disabled = true;
+        saveBtn.textContent = "Processing...";
+        logStatus("Reading file and sending to background worker...");
+
+        // Read the dropped file into a Base64 string
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const base64Data = e.target.result;
+
+            const sowName = allSows.find(s => s.code === selectedSowCode.value)?.name || "Unknown";
+            const finalPdfName = `${selectedSowCode.value} - ${sowName} - ${companyInput.value}.pdf`;
+
+            // Make sure this path is verified in your File Explorer!
+            const targetDirectory = "C:\\Users\\BUrness\\OneDrive - Fendler Patterson\\Projects\\1024 - Orchard Path III\\Bids\\Quotes";
+
+            const payload = {
+                fileName: currentFile.name,
+                fileData: base64Data,
+                targetDirectory: targetDirectory,
+                finalPdfName: finalPdfName
+            };
+
+            // Send to background.js instead of Native Host directly
+            chrome.runtime.sendMessage(
+                { action: "sendToPython", payload: payload },
+                (response) => {
+                    // Unlock UI
+                    saveBtn.disabled = false;
+                    saveBtn.textContent = "Send to Processor";
+
+                    if (!response) {
+                        logStatus("Connection Error: Background worker did not respond.", true);
+                    } else if (response.status === 'success') {
+                        logStatus(response.message);
+
+                        // Reset the form
+                        currentFile = null;
+                        companyInput.value = '';
+                        ghostText.textContent = '';
+                        sowSearchInput.value = '';
+                        selectedSowCode.value = '';
+                        checkFormReady();
+                    } else {
+                        logStatus("Backend Error: " + response.message, true);
+                    }
+                }
+            );
+        };
+
+        reader.readAsDataURL(currentFile);
+    });
+
     // 4. Utility Functions
     function checkFormReady() {
         // Enable save if we have a file, a company name, and an SOW
