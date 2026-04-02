@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "DocHandler Web V1",
+  "version": "1.0",
+  "description": "Browser extension for routing construction quotes to a local Python processor.",
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "nativeMessaging"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "sidebar.html"
+  },
+  "action": {
+    "default_title": "Open DocHandler"
+  }
+}
