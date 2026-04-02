@@ -30,3 +30,6 @@ __pycache__/
 venv/
 .env
 .env.*
+
+# Native host manifest (machine paths + extension ID)
+fp-fetch-backend/com.fpfetch.native_host.json

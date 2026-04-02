@@ -1,0 +1,31 @@
+FP Fetch backend — quick setup (Windows)
+========================================
+
+1) Install Python 3.12+ from https://www.python.org/downloads/windows/
+   OR:  winget install Python.Python.3.12
+   During setup, enable "Add python.exe to PATH".
+
+2) Open PowerShell in this folder (fp-fetch-backend) and run:
+
+   Set-ExecutionPolicy -Scope CurrentUser RemoteSigned -Force
+   .\setup.ps1 -ExtensionId "YOUR_EXTENSION_ID"
+
+   If you already ran setup with a placeholder ID, run it again with your real ID so
+   Chrome will allow the connection (allowed_origins must match).
+
+   Get YOUR_EXTENSION_ID from Chrome: chrome://extensions → Developer mode →
+   ID under the FP Fetch extension (32 characters).
+
+   Optional: .\setup.ps1 -InstallPython -ExtensionId "YOUR_EXTENSION_ID"
+   (uses winget to install Python if you do not have it yet)
+
+3) In your extension manifest (manifest.json), the native host name must be:
+
+   com.fpfetch.native_host
+
+   Use chrome.runtime.connectNative("com.fpfetch.native_host") in the extension.
+
+Virtual environment
+---------------------
+The setup script creates .\venv\ inside fp-fetch-backend and installs pywin32 there.
+run_host.bat uses that venv automatically. You do not need to activate the venv manually.
