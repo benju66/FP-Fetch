@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>DocHandler</title>
+    <title>FP Fetch</title>
     <link rel="stylesheet" href="sidebar.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <h2>DocHandler</h2>
+            <h2>FP Fetch</h2>
             <span class="status-dot"></span>
         </header>
 
@@ -38,11 +38,11 @@
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group custom-select-container">
             <label>Scope of Work (SOW)</label>
-            <select id="sowSelect" class="styled-select">
-                <option value="">Select SOW...</option>
-                </select>
+            <input type="text" id="sowSearchInput" class="styled-select" placeholder="Search SOW name or code..." autocomplete="off">
+            <ul id="sowList" class="sow-dropdown"></ul>
+            <input type="hidden" id="selectedSowCode">
         </div>
 
         <div class="action-panel">

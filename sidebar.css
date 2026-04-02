@@ -188,3 +188,55 @@ label {
     color: var(--text-muted);
     font-family: monospace;
 }
+
+/* Custom SOW Dropdown Styling */
+.custom-select-container {
+    position: relative;
+}
+
+.sow-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 200px; /* The small scrollable window */
+    overflow-y: auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    z-index: 10;
+    margin-top: 4px;
+    padding: 0;
+    list-style: none;
+    display: none; /* Hidden by default */
+}
+
+/* Scrollbar styling for the dropdown */
+.sow-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+.sow-dropdown::-webkit-scrollbar-thumb {
+    background-color: #cbd5e1;
+    border-radius: 4px;
+}
+
+.sow-dropdown.active {
+    display: block;
+}
+
+.sow-dropdown li {
+    padding: 10px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.sow-dropdown li:hover {
+    background-color: var(--drop-bg);
+    color: var(--primary-color);
+}
+
+.sow-dropdown li:last-child {
+    border-bottom: none;
+}
